@@ -19,6 +19,45 @@ News articles are collected according to various querying strategies, as discuss
 ### ii) [Data-driven filtering and ranking](https://github.com/nestauk/nhsx_digital_shift/blob/master/notebooks/news_filter_data_driven.ipynb)
 ### iii) [Keyword-driven filtering and ranking](https://github.com/nestauk/nhsx_digital_shift/blob/master/utils/keyword_filter.py#L127)
 
+#### Notes for NHS team running this
+
+The following instructions assume a UNIX-like system (e.g. this works on both my MacBook and cloud Linux server). On Windows I would first recommend using the Windows-Linux Subsystem, and then using the Ubuntu interface on there.
+
+Firstly, [install conda on your local machine](https://docs.conda.io/projects/conda/en/latest/user-guide/install/). 
+
+After this you can create an environment to work in:
+
+```
+conda create -y -n nhsx python=3.7 pandas
+conda activate nhsx
+pip install inflect
+pip install newsapi-python
+pip install openpyxl
+```
+
+Next, get the code from this repository:
+
+```
+git clone https://github.com/nestauk/nhsx_digital_shift
+cd nhsx_digital_shift
+mkdir secrets
+export PYTHONPATH=$PWD
+```
+
+Now you will need a NewsAPI key. You should store this in a file called `news_api_key` and the contents of the file should be the key only. Now you should copy the file `news_api_key` which you created into the folder `secrets`, e.g.:
+
+```
+cp /path/to/news_api_key secrets
+```
+
+Finally, you can run the data collection and processing code:
+
+```
+python utils/keyword_filter.py
+```
+
+The output files will appear in your current working directory.
+
 ## b) Health app reviews
 ### i) [Collecting playstore reviews](https://github.com/nestauk/nhsx_playscrape/blob/master/playscrape/playscrape.py)
 ### ii) [Exploratory and sentiment analysis](https://github.com/nestauk/nhsx_digital_shift/blob/master/notebooks/health_app_reviews.ipynb)
