@@ -8,6 +8,7 @@ Collect data from NewsAPI in week chunks.
 from utils.secrets import news_api_key
 from utils.datapath import datapath
 from newsapi import NewsApiClient
+from newsapi.newsapi_exception import NewsAPIException
 from dateutil import rrule
 from datetime import datetime, timedelta
 from pandas import Timestamp
@@ -28,9 +29,14 @@ def get_articles(verbose=False, **kwargs):
     results_so_far = 0
     total_results = None
     kwargs['page'] = 1
-    while results_so_far != total_results and kwargs['page'] < 100:
+    while results_so_far != total_results and kwargs['page'] < 100:        
         newsapi = NewsApiClient(api_key=news_api_key())  # NB: news_api_key is cached
-        results = newsapi.get_everything(**kwargs)
+        try:
+            results = newsapi.get_everything(**kwargs)
+        except NewsAPIException as exception:
+            if 'Developer accounts are limited to a max of 100 results' in str(exception):
+                break
+            raise exception
         if total_results is None and verbose:
             print(f"{results['totalResults']} results found for {kwargs}")
         for article in results['articles']:
