@@ -103,7 +103,7 @@ def filter_articles(articles, core_terms, seed_terms,
     return ranked_articles
 
 
-def save_excel(ranked_articles, label):
+def save_excel(ranked_articles, articles, label):
     '''Save the ranked articles in a nicely formatted Excel file'''
     output = []
     titles = set()
@@ -180,4 +180,4 @@ if __name__ == '__main__':
     filename = datapath('processed', f'filtered_{label}.json')
     with open(filename, 'w') as f:
         f.write(json.dumps(ranked_articles))
-    save_excel(ranked_articles, 'nhsx_digital_shift_news_v2')
+    save_excel(ranked_articles, articles, 'nhsx_digital_shift_news_v2')
