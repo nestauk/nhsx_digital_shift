@@ -174,10 +174,10 @@ if __name__ == '__main__':
         f.write(json.dumps(ranked_articles))
 
     # Collect and save from March 2020 til present
-    label = 'nhs_since_march'
-    articles = download_articles('nhs_since_march', **initial_kwargs)
+    label = 'nhs_since_march_2'
+    articles = download_articles('nhs_since_march_2', **initial_kwargs)
     ranked_articles = filter_articles(articles, core_terms, seed_terms) # Default tight requirements
     filename = datapath('processed', f'filtered_{label}.json')
     with open(filename, 'w') as f:
         f.write(json.dumps(ranked_articles))
-    save_excel(ranked_articles, 'nhsx_digital_shift_news_v1')
+    save_excel(ranked_articles, 'nhsx_digital_shift_news_v2')
